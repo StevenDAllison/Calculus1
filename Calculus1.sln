@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculus1", "Calculus1\Calculus1.csproj", "{24BB3991-46C7-497D-A788-1BBDC0E20FC9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24BB3991-46C7-497D-A788-1BBDC0E20FC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24BB3991-46C7-497D-A788-1BBDC0E20FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24BB3991-46C7-497D-A788-1BBDC0E20FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24BB3991-46C7-497D-A788-1BBDC0E20FC9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6BBCE1F-3945-43A2-A7DC-71602E92C5C8}
+	EndGlobalSection
+EndGlobal
