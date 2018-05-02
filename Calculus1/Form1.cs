@@ -14,14 +14,14 @@ namespace Calculus1
 {
     public partial class Form1 : Form
     {
-        
+        public int filedownload;
         class row
         {
             public double time;
             public double voltage;
             public double current;
             public double voltageDerivative;
-            public double charge;
+            public double resistance;
         }
 
         List<row> table = new List<row>();
@@ -30,11 +30,20 @@ namespace Calculus1
         {
             InitializeComponent();
             chart1.Series.Clear();
+            filedownload = 0;
         }
 
         void tableSort()
         {
             table = table.OrderBy(x => x.time).ToList();
+        }
+
+        void calculateresist()
+        {
+            for (int i = 0; i < table.Count; i++)
+            {                
+                table[i].resistance = table[i].voltage / table[i].current;
+            }
         }
 
         void derivative()
@@ -68,18 +77,23 @@ namespace Calculus1
                             table.Last().current = double.Parse(l[2]);
                         }
                     }
+                    MessageBox.Show(openFileDialog1.FileName + " opened correctly.");
+                    filedownload = 1;
                 }
                 catch (IOException)
                 {
                     MessageBox.Show(openFileDialog1.FileName + " failed to open.");
+                    filedownload = 0;
                 }
                 catch (FormatException)
                 {
                     MessageBox.Show(openFileDialog1.FileName + " is not in the required format.");
+                    filedownload = 0;
                 }
                 catch (IndexOutOfRangeException)
                 {
                     MessageBox.Show(openFileDialog1.FileName + " is not in the required format");
+                    filedownload = 0;
                 }
             }
         }
@@ -110,7 +124,10 @@ namespace Calculus1
 
         private void chart1_Click(object sender, EventArgs e)
         {
-
+            if (filedownload = 0)
+            {
+                MessageBox.Show("Download a data set and choose a graph type.");
+            }            
         }
 
         private void itToolStripMenuItem_Click(object sender, EventArgs e)
@@ -160,12 +177,38 @@ namespace Calculus1
             };
 
             chart1.Series.Add(series1);
-            for (int i = 0; i < table.Count; i++)
+            for (int i = 1; i < table.Count; i++)
             {
                 series1.Points.AddXY(table[i].time, table[i].voltageDerivative);
             }
             chart1.ChartAreas[0].AxisX.Title = "time (s)";
             chart1.ChartAreas[0].AxisY.Title = "dV/dt (V/s)";
+            chart1.ChartAreas[0].RecalculateAxesScale();
+        }
+
+        private void vITToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            calculateresist();
+            chart1.Series.Clear();
+            chart1.ChartAreas[0].AxisX.IsMarginVisible = false;
+
+            Series series1 = new Series
+            {
+                Name = "R (Ω)",
+                Color = Color.Blue,
+                IsVisibleInLegend = true,
+                IsXValueIndexed = true,
+                ChartType = SeriesChartType.Spline,
+                BorderWidth = 2
+            };
+
+            chart1.Series.Add(series1);
+            for (int i = 0; i < table.Count; i++)
+            {
+                series1.Points.AddXY(table[i].time, table[i].resistance);
+            }
+            chart1.ChartAreas[0].AxisX.Title = "time (s)";
+            chart1.ChartAreas[0].AxisY.Title = "R (Ω)";
             chart1.ChartAreas[0].RecalculateAxesScale();
         }
     }
