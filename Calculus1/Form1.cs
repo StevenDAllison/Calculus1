@@ -39,7 +39,7 @@ namespace Calculus1
 
         void derivative()
         {
-            for (int i=0; i < table.Count; i++)
+            for (int i=1; i < table.Count; i++)
             {
                 double dV = table[i].voltage - table[i - 1].voltage;
                 double dt = table[i].time - table[i - 1].time;
@@ -90,9 +90,9 @@ namespace Calculus1
             chart1.ChartAreas[0].AxisX.IsMarginVisible = false;            
             Series series1 = new Series
             {
-                Name = "Spline",
+                Name = "Voltage (V)",
                 Color = Color.Blue,
-                IsVisibleInLegend = false,
+                IsVisibleInLegend = true,
                 IsXValueIndexed = true,
                 ChartType = SeriesChartType.Spline,
                 BorderWidth = 2
@@ -103,6 +103,9 @@ namespace Calculus1
             {
                 series1.Points.AddXY(table[i].time, table[i].voltage);
             }
+            chart1.ChartAreas[0].AxisX.Title = "time (s)";
+            chart1.ChartAreas[0].AxisY.Title = "Voltage (V)";
+            chart1.ChartAreas[0].RecalculateAxesScale();
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -117,9 +120,9 @@ namespace Calculus1
             
             Series series1 = new Series
             {
-                Name = "Spline",
+                Name = "Current (A)",
                 Color = Color.Blue,
-                IsVisibleInLegend = false,
+                IsVisibleInLegend = true,
                 IsXValueIndexed = true,
                 ChartType = SeriesChartType.Spline,
                 BorderWidth = 2
@@ -130,6 +133,40 @@ namespace Calculus1
             {
                 series1.Points.AddXY(table[i].time, table[i].current);
             }
+            chart1.ChartAreas[0].AxisX.Title = "time (s)";
+            chart1.ChartAreas[0].AxisY.Title = "Current (A)";
+            chart1.ChartAreas[0].RecalculateAxesScale();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dVdtTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            derivative();
+            chart1.Series.Clear();
+            chart1.ChartAreas[0].AxisX.IsMarginVisible = false;
+
+            Series series1 = new Series
+            {
+                Name = "dV/dt (V/s)",
+                Color = Color.Blue,
+                IsVisibleInLegend = true,
+                IsXValueIndexed = true,
+                ChartType = SeriesChartType.Spline,
+                BorderWidth = 2
+            };
+
+            chart1.Series.Add(series1);
+            for (int i = 0; i < table.Count; i++)
+            {
+                series1.Points.AddXY(table[i].time, table[i].voltageDerivative);
+            }
+            chart1.ChartAreas[0].AxisX.Title = "time (s)";
+            chart1.ChartAreas[0].AxisY.Title = "dV/dt (V/s)";
+            chart1.ChartAreas[0].RecalculateAxesScale();
         }
     }
 }
